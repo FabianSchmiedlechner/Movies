@@ -3,14 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingVertical="10dp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_poster"
-        android:layout_width="40dp"
+        android:layout_width="60dp"
         android:layout_height="90dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
         tools:src="@drawable/poster" />
 
     <TextView
@@ -19,24 +22,25 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
         android:text="2008"
-        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintBottom_toTopOf="@id/tv_title"
         app:layout_constraintStart_toEndOf="@id/iv_poster"
-        app:layout_constraintTop_toTopOf="@id/iv_poster" />
+        app:layout_constraintTop_toTopOf="@id/iv_poster"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:textStyle="bold"
+        android:layout_marginHorizontal="26dp"
         android:text="The Dark Knight"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/ll_rating"
+        app:layout_constraintEnd_toStartOf="@id/iv_bookmark"
         app:layout_constraintStart_toEndOf="@id/iv_poster"
         app:layout_constraintTop_toBottomOf="@id/tv_year" />
 
     <LinearLayout
-        android:id="@+id/ll_rating"
+        android:id="@+id/ll_rating_filled"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
@@ -48,21 +52,86 @@
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:src="@drawable/star_filled" />
+            android:src="@drawable/star_filled"
+            android:visibility="invisible" />
 
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:src="@drawable/star_filled" />
+            android:layout_marginStart="4dp"
+            android:src="@drawable/star_filled"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/star_filled"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/star_filled"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/star_filled"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/ll_rating_filled"
+        app:layout_constraintStart_toEndOf="@id/iv_poster"
+        app:layout_constraintTop_toTopOf="@id/ll_rating_filled">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/star_gray" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/star_gray" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/star_gray" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/star_gray" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/star_gray" />
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/iv_bookmark"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/favorite"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/favorite" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
