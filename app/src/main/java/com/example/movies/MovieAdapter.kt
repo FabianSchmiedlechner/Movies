@@ -13,6 +13,7 @@ import com.example.movies.extensions.viewBinding
 import com.example.movies.model.Movie
 import com.example.movies.screens.home.HomeFragmentDirections
 import com.example.movies.screens.search.SearchFragmentDirections
+import java.time.LocalDate
 import kotlin.math.roundToInt
 
 class MovieAdapter(private val onClick: (Movie) -> Unit) :
@@ -25,7 +26,10 @@ class MovieAdapter(private val onClick: (Movie) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
-            binding.tvYear.text = movie.releaseDate
+
+            val localDate = LocalDate.parse(movie.releaseDate)
+
+            binding.tvYear.text = localDate.year.toString()
             binding.tvTitle.text = movie.title
             binding.ivPoster.load(movie.posterUrl)
 

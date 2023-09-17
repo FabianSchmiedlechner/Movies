@@ -9,10 +9,11 @@ import kotlinx.coroutines.launch
 
 class SignUpViewModel(private val movieDao: MovieDao) : ViewModel() {
 
-    fun initDb(movies: List<Movie>) {
+    fun initDb(movies: List<Movie>, staffPicks: List<Movie>) {
         viewModelScope.launch(Dispatchers.IO) {
             if (movieDao.getAll().isEmpty()) {
                 movieDao.insertAll(movies)
+                movieDao.insertAll(staffPicks)
             }
         }
     }

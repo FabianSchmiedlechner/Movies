@@ -43,18 +43,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
         isCoreLibraryDesugaringEnabled = true
     }
-//    packaging {
-//        resources.excludes.add("META-INF/*")
-//        resources.excludes.add("mozilla/*")
-//        resources.excludes.add("kotlin/coroutines/coroutines.kotlin_builtins")
-//        resources.excludes.add("kotlin/kotlin.kotlin_builtins")
-//        resources.excludes.add("kotlin/reflect/reflect.kotlin_builtins")
-//        resources.excludes.add("kotlin/collections/collections.kotlin_builtins")
-//        resources.excludes.add("kotlin/annotation/annotation.kotlin_builtins")
-//        resources.excludes.add("kotlin/internal/*")
-//        resources.excludes.add("kotlin/ranges/*")
-//        resources.excludes.add("xsd/*")
-//    }
 
     kotlinOptions {
         jvmTarget = "1.8"

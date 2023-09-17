@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -24,7 +25,7 @@ data class Movie(
     var reviews: Int,
     var budget: Int,
     var language: String,
-    @Ignore var genres: List<String>,
+    var genres: List<String>,
     var staffPick: Boolean = false,
     var favorite: Boolean = false,
 ) : Parcelable {

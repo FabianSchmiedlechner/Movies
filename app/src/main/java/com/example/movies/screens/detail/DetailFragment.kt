@@ -15,8 +15,11 @@ import com.example.movies.databinding.FragmentDetailBinding
 import com.example.movies.extensions.viewBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 import kotlin.math.roundToInt
 
 class DetailFragment : Fragment(R.layout.fragment_detail) {
@@ -45,10 +48,31 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding.tvTitle.text = movie.title
         binding.tvYear.text = "(${localDate.year})"
         binding.tvDescription.text = movie.overview
-        binding.tvBudget.text = movie.budget.toString()
-        binding.tvRevenue.text = movie.revenue.toString()
+
+        val decimalFormat = DecimalFormat("#,###", DecimalFormatSymbols(Locale.GERMANY))
+        binding.tvBudget.text = "$ ${decimalFormat.format(movie.budget)}"
+
+        binding.tvRevenue.text = "$ ${decimalFormat.format(movie.revenue)}"
         binding.tvLanguage.text = movie.language
         binding.tvRating.text = "${movie.rating} (${movie.reviews})"
+
+        movie.genres.forEachIndexed { index, genre ->
+            when (index) {
+                0 -> {
+                    binding.tvGenre1.text = genre
+                    binding.tvGenre1.visibility = View.VISIBLE
+                }
+                1 -> {
+                    binding.tvGenre2.text = genre
+                    binding.tvGenre2.visibility = View.VISIBLE
+                }
+                2 -> {
+                    binding.tvGenre3.text = genre
+                    binding.tvGenre3.visibility = View.VISIBLE
+                }
+
+            }
+        }
 
         binding.ivFavorite.setImageResource(if (movie.favorite) R.drawable.favorite_filled else R.drawable.favorite)
 
