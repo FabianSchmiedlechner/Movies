@@ -36,6 +36,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private fun parseMovies(): List<Movie> {
         val moviesInputStream = resources.openRawResource(R.raw.movies)
-        return Json.decodeFromStream<List<Movie>>(moviesInputStream)
+        return Json.decodeFromStream(moviesInputStream)
     }
 }

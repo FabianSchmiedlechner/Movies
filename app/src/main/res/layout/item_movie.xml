@@ -35,6 +35,7 @@
         android:layout_marginHorizontal="26dp"
         android:text="The Dark Knight"
         android:textStyle="bold"
+        android:textSize="19sp"
         app:layout_constraintBottom_toTopOf="@id/ll_rating"
         app:layout_constraintEnd_toStartOf="@id/iv_bookmark"
         app:layout_constraintStart_toEndOf="@id/iv_poster"

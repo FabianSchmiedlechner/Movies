@@ -1,7 +1,6 @@
 package com.example.movies.di
 
 import androidx.room.Room
-import com.example.movies.MovieAdapter
 import com.example.movies.data.AppDatabase
 import com.example.movies.screens.detail.DetailViewModel
 import com.example.movies.screens.home.HomeViewModel

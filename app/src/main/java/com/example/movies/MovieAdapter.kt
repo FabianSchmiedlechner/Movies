@@ -2,21 +2,17 @@ package com.example.movies
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.movies.data.MovieDao
-import com.example.movies.model.Movie
 import com.example.movies.databinding.ItemMovieBinding
 import com.example.movies.extensions.viewBinding
+import com.example.movies.model.Movie
 import com.example.movies.screens.home.HomeFragmentDirections
 import com.example.movies.screens.search.SearchFragmentDirections
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 
 class MovieAdapter(private val onClick: (Movie) -> Unit) :

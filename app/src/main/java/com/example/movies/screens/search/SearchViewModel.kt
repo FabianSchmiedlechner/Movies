@@ -2,23 +2,27 @@ package com.example.movies.screens.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movies.model.Movie
 import com.example.movies.data.MovieDao
+import com.example.movies.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 sealed class SearchUiState {
-    data class Default(val allMovies: List<Movie>, val displayedMovies: List<Movie>, val filteredMovies : List<Movie>)
+    data class Default(
+        val allMovies: List<Movie>,
+        val displayedMovies: List<Movie>,
+        val filteredMovies: List<Movie>
+    )
 }
 
 class SearchViewModel(private val movieDao: MovieDao) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(SearchUiState.Default(emptyList(), emptyList(), emptyList()))
+    private val _uiState =
+        MutableStateFlow(SearchUiState.Default(emptyList(), emptyList(), emptyList()))
     val uiState: StateFlow<SearchUiState.Default> = _uiState.asStateFlow()
 
     init {

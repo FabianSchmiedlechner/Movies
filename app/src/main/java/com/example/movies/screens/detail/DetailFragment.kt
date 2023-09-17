@@ -51,7 +51,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding.tvRating.text = "${movie.rating} (${movie.reviews})"
 
         binding.ivFavorite.setImageResource(if (movie.favorite) R.drawable.favorite_filled else R.drawable.favorite)
-        
+
         binding.ivFavorite.setOnClickListener {
             viewModel.favoriteMovie(movie)
             binding.ivFavorite.setImageResource(if (!movie.favorite) R.drawable.favorite_filled else R.drawable.favorite)
