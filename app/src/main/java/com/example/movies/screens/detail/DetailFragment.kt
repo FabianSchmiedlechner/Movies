@@ -36,6 +36,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding.tvLanguage.text = movie.language
         binding.tvRating.text = "${movie.rating} (${movie.reviews})"
 
+        binding.ivFavorite.setImageResource(if (movie.favorite) R.drawable.favorite_filled else R.drawable.favorite)
+        binding.ivFavorite.setOnClickListener {
+            viewModel.favoriteMovie(movie)
+            movie.favorite = !movie.favorite
+            binding.ivFavorite.setImageResource(if (movie.favorite) R.drawable.favorite_filled else R.drawable.favorite)
+        }
+
         binding.ivPoster.load(movie.posterUrl)
 
         val rating = movie.rating.roundToInt()

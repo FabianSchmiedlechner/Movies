@@ -50,27 +50,22 @@ class MovieAdapter(private val onClick: (Movie) -> Unit) :
                 }
             }
 
-            if (movie.favorite) {
-                binding.ivBookmark.setImageResource(R.drawable.favorite_filled)
-            } else {
-                binding.ivBookmark.setImageResource(R.drawable.favorite)
-            }
+            binding.ivBookmark.setImageResource(if (movie.favorite) R.drawable.favorite_filled else R.drawable.favorite)
 
             binding.ivBookmark.setOnClickListener {
-//                toggleFavorite(movie)
                 onClick(movie)
+                toggleFavorite(movie)
             }
 
             binding
         }
 
-//        private fun toggleFavorite(movie: Movie) {
-//            if (movie.favorite) {
-//                binding.ivBookmark.setImageResource(R.drawable.favorite)
-//            } else {
-//                binding.ivBookmark.setImageResource(R.drawable.favorite_filled)
-//            }
-//        }
+        private fun toggleFavorite(movie: Movie) {
+            binding.ivBookmark.setImageResource(
+                if (movie.favorite) R.drawable.favorite else R.drawable.favorite_filled
+            )
+            movie.favorite = !movie.favorite
+        }
     }
 
     private class MovieDiffCallBack : DiffUtil.ItemCallback<Movie>() {

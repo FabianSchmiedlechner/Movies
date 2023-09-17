@@ -24,8 +24,6 @@ val appModule = module {
 
     single { get<AppDatabase>().movieDao() }
 
-//    single { MovieAdapter(get()) }
-
     viewModel { HomeViewModel(get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { SearchViewModel(get()) }

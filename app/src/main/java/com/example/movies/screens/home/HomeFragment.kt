@@ -31,16 +31,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-            viewModel.uiState.collect { uiState ->
-                showFavoriteMovies(uiState.savedMovies)
-                showStaffPicks(uiState.staffPicks)
-            }
+                viewModel.uiState.collect { uiState ->
+                    showFavoriteMovies(uiState.savedMovies)
+                    showStaffPicks(uiState.staffPicks)
+                }
             }
         }
     }
 
+    override fun onResume() {
+        viewModel.updateLists()
+        super.onResume()
+    }
+
     private fun showFavoriteMovies(savedMovies: List<Movie>) {
-        if (savedMovies.isEmpty()) binding.emptyView.visibility = View.VISIBLE else View.GONE
+        binding.emptyView.visibility = if (savedMovies.isEmpty()) View.VISIBLE else View.GONE
 
         binding.rvFavorites.adapter = FavoriteAdapter().apply {
             this.submitList(savedMovies)

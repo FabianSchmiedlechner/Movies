@@ -11,7 +11,9 @@ class SignUpViewModel(private val movieDao: MovieDao) : ViewModel() {
 
     fun initDb(movies: List<Movie>) {
         viewModelScope.launch(Dispatchers.IO) {
-            movieDao.insertAll(movies)
+            if (movieDao.getAll().isEmpty()) {
+                movieDao.insertAll(movies)
+            }
         }
     }
 }

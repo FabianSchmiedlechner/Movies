@@ -36,6 +36,21 @@ class HomeViewModel(private val movieDao: MovieDao) : ViewModel() {
         }
     }
 
+    fun updateLists() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _uiState.update { currentState ->
+                val favorites = movieDao.getFavorites()
+                val staffPicks = movieDao.getStaffPicks()
+                Timber.d("favorites: %s", favorites.size)
+                Timber.d("staffPicks: %s", staffPicks.size)
+                currentState.copy(
+                    savedMovies = favorites,
+                    staffPicks = staffPicks
+                )
+            }
+        }
+    }
+
     fun favoriteMovie(movie: Movie) {
         viewModelScope.launch(Dispatchers.IO) {
             movieDao.updateMovie(movie.copy(favorite = !movie.favorite))
