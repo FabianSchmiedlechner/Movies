@@ -1,11 +1,15 @@
-package com.example.movies.data
+package com.example.movies.model
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
-@Serializable @Parcelize
+@Serializable
+@Parcelize
+@Entity
 data class Director(
-    val name: String,
+    @PrimaryKey val name: String,
     val pictureUrl: String,
 ) : Parcelable

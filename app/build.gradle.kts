@@ -4,6 +4,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("kotlinx-serialization")
     id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -18,6 +19,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
     }
 
     buildFeatures {
@@ -36,6 +41,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+        isCoreLibraryDesugaringEnabled = true
     }
 //    packaging {
 //        resources.excludes.add("META-INF/*")
@@ -64,11 +70,20 @@ dependencies {
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
-//    implementation("androidx.databinding:databinding-runtime:8.1.1")
-//    implementation("androidx.navigation:navigation-safe-args-gradle-plugin:2.6.0")
+
+    implementation("androidx.room:room-runtime:2.5.2")
+    ksp("androidx.room:room-compiler:2.5.2")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("io.insert-koin:koin-android:3.4.0")
+    implementation("com.jakewharton.timber:timber:5.0.1")
+
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation("io.coil-kt:coil:2.4.0")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

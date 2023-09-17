@@ -1,22 +1,32 @@
 package com.example.movies
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.movies.data.Movie
+import com.example.movies.data.MovieDao
+import com.example.movies.model.Movie
 import com.example.movies.databinding.ItemMovieBinding
+import com.example.movies.extensions.viewBinding
+import com.example.movies.screens.home.HomeFragmentDirections
+import com.example.movies.screens.search.SearchFragmentDirections
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 
-class MovieAdapter :
+class MovieAdapter(private val onClick: (Movie) -> Unit) :
     ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffCallBack()) {
 
-    class MovieViewHolder(private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MovieViewHolder(
+        private val binding: ItemMovieBinding,
+        private val onClick: (Movie) -> Unit
+    ) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
             binding.tvYear.text = movie.releaseDate
@@ -25,15 +35,42 @@ class MovieAdapter :
 
             val rating = movie.rating.roundToInt()
             for ((index, star) in binding.llRatingFilled.children.withIndex()) {
-                if (index < rating) star.visibility = View.VISIBLE else star.visibility = View.INVISIBLE
+                if (index < rating) star.visibility = View.VISIBLE else star.visibility =
+                    View.INVISIBLE
             }
 
             binding.root.setOnClickListener {
-                Navigation.findNavController(binding.root).navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(movie))
+                if (Navigation.findNavController(binding.root).currentDestination?.label == "fragment_home") {
+                    Navigation.findNavController(binding.root)
+                        .navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(movie))
+                } else {
+                    Navigation.findNavController(binding.root).navigate(
+                        SearchFragmentDirections.actionSearchFragmentToDetailFragment(movie)
+                    )
+                }
+            }
+
+            if (movie.favorite) {
+                binding.ivBookmark.setImageResource(R.drawable.favorite_filled)
+            } else {
+                binding.ivBookmark.setImageResource(R.drawable.favorite)
+            }
+
+            binding.ivBookmark.setOnClickListener {
+//                toggleFavorite(movie)
+                onClick(movie)
             }
 
             binding
         }
+
+//        private fun toggleFavorite(movie: Movie) {
+//            if (movie.favorite) {
+//                binding.ivBookmark.setImageResource(R.drawable.favorite)
+//            } else {
+//                binding.ivBookmark.setImageResource(R.drawable.favorite_filled)
+//            }
+//        }
     }
 
     private class MovieDiffCallBack : DiffUtil.ItemCallback<Movie>() {
@@ -44,17 +81,18 @@ class MovieAdapter :
             oldItem == newItem
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MovieViewHolder(
+        binding = parent.viewBinding { inflater ->
             ItemMovieBinding.inflate(
-                LayoutInflater.from(parent.context),
+                inflater,
                 parent,
                 false
             )
-        )
-    }
+        },
+        onClick = onClick
+    )
 
-    override fun onBindViewHolder(holder: MovieAdapter.MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 }

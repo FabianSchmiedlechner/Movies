@@ -1,0 +1,112 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "b85551da5e160ebcdcb2eca240980626",
+    "entities": [
+      {
+        "tableName": "Movie",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rating` REAL NOT NULL, `id` INTEGER NOT NULL, `revenue` INTEGER, `releaseDate` TEXT NOT NULL, `director` TEXT NOT NULL, `posterUrl` TEXT NOT NULL, `runtime` INTEGER NOT NULL, `title` TEXT NOT NULL, `overview` TEXT NOT NULL, `reviews` INTEGER NOT NULL, `budget` INTEGER NOT NULL, `language` TEXT NOT NULL, `staffPick` INTEGER NOT NULL, `favorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "rating",
+            "columnName": "rating",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revenue",
+            "columnName": "revenue",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "releaseDate",
+            "columnName": "releaseDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "director",
+            "columnName": "director",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "posterUrl",
+            "columnName": "posterUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "runtime",
+            "columnName": "runtime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "overview",
+            "columnName": "overview",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reviews",
+            "columnName": "reviews",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "budget",
+            "columnName": "budget",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "staffPick",
+            "columnName": "staffPick",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "favorite",
+            "columnName": "favorite",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b85551da5e160ebcdcb2eca240980626')"
+    ]
+  }
+}
