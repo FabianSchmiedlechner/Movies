@@ -23,11 +23,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by viewModel()
     private val binding by viewBinding(FragmentHomeBinding::bind)
+    private val favoriteAdapter by lazy { FavoriteAdapter() }
+    private val staffPicksAdapter by lazy { MovieAdapter { movie ->
+        viewModel.favoriteMovie(movie)
+    } }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.btnSearch.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
         }
+
+        binding.rvFavorites.adapter = favoriteAdapter
+        binding.rvStaffPicks.adapter = staffPicksAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -46,15 +53,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun showFavoriteMovies(savedMovies: List<Movie>) {
         binding.emptyView.visibility = if (savedMovies.isEmpty()) View.VISIBLE else View.GONE
-
-        binding.rvFavorites.adapter = FavoriteAdapter().apply {
-            this.submitList(savedMovies)
-        }
+        favoriteAdapter.submitList(savedMovies)
     }
 
     private fun showStaffPicks(staffPicks: List<Movie>) {
-        val adapter = MovieAdapter { movie -> viewModel.favoriteMovie(movie) }
-        binding.rvStaffPicks.adapter = adapter
-        adapter.submitList(staffPicks)
+        staffPicksAdapter.submitList(staffPicks)
     }
 }

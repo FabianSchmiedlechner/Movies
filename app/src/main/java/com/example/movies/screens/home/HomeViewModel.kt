@@ -54,6 +54,7 @@ class HomeViewModel(private val movieDao: MovieDao) : ViewModel() {
     fun favoriteMovie(movie: Movie) {
         viewModelScope.launch(Dispatchers.IO) {
             movieDao.updateMovie(movie.copy(favorite = !movie.favorite))
+            updateLists()
         }
     }
 }

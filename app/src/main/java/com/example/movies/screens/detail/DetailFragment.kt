@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.movies.R
 import com.example.movies.databinding.FragmentDetailBinding
 import com.example.movies.extensions.viewBinding
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -22,7 +26,17 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private val args: DetailFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val movie = args.movie
+        var movie = args.movie
+
+        viewModel.setMovie(movie)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { data ->
+                    data.movie?.let { movie = data.movie }
+                }
+            }
+        }
 
         val localDate = LocalDate.parse(movie.releaseDate)
 
@@ -37,10 +51,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding.tvRating.text = "${movie.rating} (${movie.reviews})"
 
         binding.ivFavorite.setImageResource(if (movie.favorite) R.drawable.favorite_filled else R.drawable.favorite)
+        
         binding.ivFavorite.setOnClickListener {
             viewModel.favoriteMovie(movie)
-            movie.favorite = !movie.favorite
-            binding.ivFavorite.setImageResource(if (movie.favorite) R.drawable.favorite_filled else R.drawable.favorite)
+            binding.ivFavorite.setImageResource(if (!movie.favorite) R.drawable.favorite_filled else R.drawable.favorite)
         }
 
         binding.ivPoster.load(movie.posterUrl)
