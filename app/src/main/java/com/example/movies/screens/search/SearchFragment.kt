@@ -17,7 +17,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private val viewModel: SearchViewModel by viewModel()
     private val binding by viewBinding(FragmentSearchBinding::bind)
     private val searchAdapter by lazy {
-        SearchAdapter { movie ->
+        MovieAdapter { movie ->
             viewModel.favoriteMovie(movie)
         }
     }
@@ -31,7 +31,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         binding.rvMovies.adapter = searchAdapter
 
-        viewModel.displayedMovies.observe(viewLifecycleOwner) {
+        viewModel.filteredMovies.observe(viewLifecycleOwner) {
             searchAdapter.submitList(it)
         }
 

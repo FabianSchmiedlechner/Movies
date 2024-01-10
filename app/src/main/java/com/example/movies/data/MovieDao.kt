@@ -28,6 +28,9 @@ interface MovieDao {
     @Query("SELECT * FROM movie WHERE staffPick = 1")
     fun getStaffPicksLive(): LiveData<List<Movie>>
 
+    @Query("SELECT * FROM movie WHERE title LIKE '%' || :query || '%'")
+    fun findMovies(query: String): LiveData<List<Movie>>
+
     @Insert
     fun insertAll(vararg movie: Movie)
 

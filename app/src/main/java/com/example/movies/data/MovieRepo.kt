@@ -15,6 +15,8 @@ class MovieRepo private constructor(
         Timber.d("Updated movie favorite: %s", movie.favorite)
     }
 
+    fun findMovie(query: String) = movieDao.findMovies(query)
+
     companion object {
 
         // For Singleton instantiation

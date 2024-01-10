@@ -1,26 +1,24 @@
 package com.example.movies.screens.search
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movies.data.MovieDao
 import com.example.movies.data.MovieRepo
 import com.example.movies.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class SearchViewModel(private val movieDao: MovieDao, private val movieRepo: MovieRepo) :
+class SearchViewModel(private val movieRepo: MovieRepo) :
     ViewModel() {
 
-    private var allMovies: List<Movie> = emptyList()
-    var displayedMovies: MutableLiveData<List<Movie>> = MutableLiveData(emptyList())
-    private var filteredMovies: List<Movie> = emptyList()
+    private val allMovies: LiveData<List<Movie>> = movieRepo.all
+    val filteredMovies: MediatorLiveData<List<Movie>> = MediatorLiveData()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            allMovies = movieDao.getAll()
-            displayedMovies.postValue(allMovies)
+        filteredMovies.addSource(allMovies) {
+            filteredMovies.value = it
         }
     }
 
@@ -31,12 +29,12 @@ class SearchViewModel(private val movieDao: MovieDao, private val movieRepo: Mov
     }
 
     fun showAllMovies() {
-        displayedMovies.value = allMovies
+        filteredMovies.value = allMovies.value
     }
 
     fun filterMovies(query: String) {
-        val filteredMovies = allMovies.filter { it.title.contains(query, true) }
-        this.filteredMovies = filteredMovies
-        displayedMovies.value = filteredMovies
+        if (query.isNotEmpty())
+            filteredMovies.value =
+                allMovies.value?.filter { it.title.contains(query, true) } ?: emptyList()
     }
 }

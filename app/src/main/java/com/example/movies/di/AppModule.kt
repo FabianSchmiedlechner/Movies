@@ -26,7 +26,7 @@ val appModule = module {
 
     viewModel { HomeViewModel(MovieRepo.getInstance(get())) }
     viewModel { SignUpViewModel(get()) }
-    viewModel { SearchViewModel(get(), MovieRepo.getInstance(get())) }
+    viewModel { SearchViewModel(MovieRepo.getInstance(get())) }
     viewModel { DetailViewModel(get()) }
 
 }
