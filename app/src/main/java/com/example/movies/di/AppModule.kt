@@ -2,6 +2,7 @@ package com.example.movies.di
 
 import androidx.room.Room
 import com.example.movies.data.AppDatabase
+import com.example.movies.data.MovieRepo
 import com.example.movies.screens.detail.DetailViewModel
 import com.example.movies.screens.home.HomeViewModel
 import com.example.movies.screens.search.SearchViewModel
@@ -23,7 +24,7 @@ val appModule = module {
 
     single { get<AppDatabase>().movieDao() }
 
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel(MovieRepo.getInstance(get())) }
     viewModel { SignUpViewModel(get()) }
     viewModel { SearchViewModel(get()) }
     viewModel { DetailViewModel(get()) }

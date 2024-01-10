@@ -1,5 +1,6 @@
 package com.example.movies.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -12,11 +13,20 @@ interface MovieDao {
     @Query("SELECT * FROM movie")
     fun getAll(): List<Movie>
 
+    @Query("SELECT * FROM movie")
+    fun getAllLive(): LiveData<List<Movie>>
+
     @Query("SELECT * FROM movie WHERE favorite = 1")
     fun getFavorites(): List<Movie>
 
+    @Query("SELECT * FROM movie WHERE favorite = 1")
+    fun getFavoritesLive(): LiveData<List<Movie>>
+
     @Query("SELECT * FROM movie WHERE staffPick = 1")
     fun getStaffPicks(): List<Movie>
+
+    @Query("SELECT * FROM movie WHERE staffPick = 1")
+    fun getStaffPicksLive(): LiveData<List<Movie>>
 
     @Insert
     fun insertAll(vararg movie: Movie)

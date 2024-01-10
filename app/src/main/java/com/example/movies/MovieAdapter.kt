@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.movies.data.MovieRepo
 import com.example.movies.databinding.ItemMovieBinding
 import com.example.movies.extensions.viewBinding
 import com.example.movies.model.Movie
 import com.example.movies.screens.home.HomeFragmentDirections
 import com.example.movies.screens.search.SearchFragmentDirections
+import timber.log.Timber
 import java.time.LocalDate
 import kotlin.math.roundToInt
 
@@ -53,18 +55,9 @@ class MovieAdapter(private val onClick: (Movie) -> Unit) :
             binding.ivBookmark.setImageResource(if (movie.favorite) R.drawable.favorite_filled else R.drawable.favorite)
 
             binding.ivBookmark.setOnClickListener {
-                onClick(movie)
-                toggleFavorite(movie)
+                onClick(movie.copy(favorite = !movie.favorite)) // movieRepo.updateMovie(movie)
             }
-
             binding
-        }
-
-        private fun toggleFavorite(movie: Movie) {
-            binding.ivBookmark.setImageResource(
-                if (movie.favorite) R.drawable.favorite else R.drawable.favorite_filled
-            )
-            movie.favorite = !movie.favorite
         }
     }
 
